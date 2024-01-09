@@ -58,6 +58,17 @@ jobs:
         with:
           fetch-depth: 0
           
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js application
+        run: npm run build
+
       - name: SonarSource analysis
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -68,9 +79,6 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}      
-          
-      - name: Autobuild CodeQL
-        uses: github/codeql-action/autobuild@v3
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
