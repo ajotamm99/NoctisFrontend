@@ -8,6 +8,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 export async function GET(request: any) {
     try {        
         const session = await getServerSession(authOptions);
+        // eslint-disable-next-line
         const email= session?.user?.email;
         if (session) {
             await connect();
@@ -25,6 +26,7 @@ export async function GET(request: any) {
 export async function PUT(request: any) {
     try {
         const session = await getServerSession(authOptions);
+        // eslint-disable-next-line
         const email = session?.user?.email;
         if (session) {
             
@@ -44,6 +46,7 @@ export async function PUT(request: any) {
 export async function DELETE(request: any) {
     try {
         const session = await getServerSession(authOptions);
+        // eslint-disable-next-line
         const email = session?.user?.email;
         if (session) {
             await connect();
