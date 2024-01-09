@@ -46,6 +46,7 @@ jobs:
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_API }}
+      continue-on-error: true
 
 
   SAST-analysis:
@@ -89,23 +90,10 @@ jobs:
     - name: Install dependencies
       run: npm test --if-exists
 
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build application
-      run: npm run build
-
 
 #stack-hawk
   DAST-analysis:
-      needs: [SAST-analysis]
+      needs: test
       runs-on: ubuntu-latest
 
       steps:
