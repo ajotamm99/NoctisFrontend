@@ -34,10 +34,7 @@ jobs:
     - name: TruffleHog OSS
       uses: trufflesecurity/trufflehog@v3.63.8
       with:
-        # Repository path
-        path: ../../../
-        # Start scanning from here (usually main branch).
-        base: ${{ steps.commit_ids.outputs.base_commit }}
-        # Scan commits until here (usually dev branch).
-        head: main
+          base: ""
+          head: ${{ github.ref_name }}
+          extra_args: --only-verified
           
