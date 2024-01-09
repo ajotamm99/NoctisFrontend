@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Secret Scanning
+    - name: GitGuardian Shield Action
+      uses: GitGuardian/ggshield-action@v1.23.0
+
+    - name: Get last 5 commits
+      id: commit_ids
+      run: |
+        BASE_COMMIT=$(git rev-parse HEAD~5)
+        echo "::set-output name=base_commit::$BASE_COMMIT"
+
+        
+    - name: TruffleHog OSS
+      uses: trufflesecurity/trufflehog@v3.63.8
+      with:
+        # Repository path
+        path: ./
+        # Start scanning from here (usually main branch).
+        base: ${{ steps.commit_ids.outputs.base_commit }}
+        # Scan commits until here (usually dev branch).
+        head: main
+          
