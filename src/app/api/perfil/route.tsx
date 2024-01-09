@@ -3,7 +3,7 @@ import connect from "../../../utils/db";
 import User from "../../(models)/User";
 import { getSession, useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 export async function GET(request: any) {
     try {        
