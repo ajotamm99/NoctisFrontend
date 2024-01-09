@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  secret-scanning:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Secret Scanning
     - name: GitGuardian Shield Action
       uses: GitGuardian/ggshield/actions/secret@main
       env:
@@ -24,17 +23,28 @@ jobs:
         GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API }}
 
-    - name: Get last 5 commits
-      id: commit_ids
-      run: |
-        BASE_COMMIT=$(git rev-parse HEAD~5)
-        echo "::set-output name=base_commit::$BASE_COMMIT"
-
         
     - name: TruffleHog OSS
       uses: trufflesecurity/trufflehog@v3.63.8
       with:
           base: ""
           head: ${{ github.ref_name }}
-          extra_args: --only-verified
+
           
+  SCA-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        runs-on: ubuntu-latest
+        
+    - name: Dependency analysis with npm audit
+      run: npm audit
+
+    - name: Dependency analysis with snyk
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_API }}
+
