@@ -47,7 +47,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         handleData();
-    }, []);
+    }, );
 
 
    //incluir codigo del dashboard

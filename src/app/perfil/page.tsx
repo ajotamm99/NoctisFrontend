@@ -51,7 +51,7 @@ const ProfilePage = () => {
 
         useEffect(() => {
             handleData();
-        }, []);
+        }, );
 
     const handleNickChange = async (e: any) => {
         e.preventDefault();
