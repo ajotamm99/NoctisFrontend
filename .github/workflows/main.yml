@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         runs-on: ubuntu-latest
@@ -48,3 +48,41 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_API }}
 
+  #sonacloud + codeql
+  SAST-analysis:
+      needs: [secret-scanning, SCA-analysis]
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+
+  build:
+    needs: [SAST-analysis]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    
+
+#stack-hawk
+  DAST-analysis:
+      needs: [SAST-analysis]
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+
+  Azure-WebApp-Deployment:
+    runs-on: ubuntu-latest
+    needs: [test]
+  
+
+           
