@@ -171,7 +171,7 @@ jobs:
           npm run build --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* .next node_modules public pages package.json package-lock.json -r
+        run: zip release.zip ./* .next .env -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
