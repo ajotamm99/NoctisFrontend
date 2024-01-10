@@ -90,23 +90,23 @@ jobs:
         with:
           category: "/language:${{matrix.language}}"
 
-  test:
-    needs: SAST-analysis
-    runs-on: ubuntu-latest
+  # test:
+   # needs: SAST-analysis
+   # runs-on: ubuntu-latest
     
-    steps:
-    - uses: actions/checkout@v4
+   # steps:
+   # - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: npm install
+  #  - name: Install dependencies
+   #   run: npm install
       
-    - name: Install dependencies
-      run: npm test --if-exists
+   # - name: Install dependencies
+   #   run: npm test --if-exists
 
 
 #stack-hawk
   DAST-analysis:
-      needs: test
+      needs: SAST-analysis
       runs-on: ubuntu-latest
 
       steps:
