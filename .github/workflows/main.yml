@@ -108,6 +108,14 @@ jobs:
   DAST-analysis:
       needs: SAST-analysis
       runs-on: ubuntu-latest
+      env:
+        MONGODDB_URI: ${{ secrets.MONGODB_URI }}
+        NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      permissions:
+        actions: write
+        contents: write
+        security-events: write
 
       steps:
       - uses: actions/checkout@v4
@@ -130,7 +138,9 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.2.0
         with:
+          token: ${{ secrets.GIT_TOKEN }}
           target: 'http://localhost:3000'
+          cmd_options: '-a'
 
 #Azure webapp development
   
