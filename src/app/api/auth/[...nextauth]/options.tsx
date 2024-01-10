@@ -17,22 +17,31 @@ export const authOptions: any = {
       },
       // eslint-disable-next-line
     async authorize(credentials) {
-        await connect();
+        
         try {
-            // eslint-disable-next-line
-          const user = await User.findOne({ email: credentials.email });
+          await connect();
+
+        const user = await User.findOne({ email: credentials?.email });
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               // eslint-disable-next-line
-              credentials.password,
+              credentials?.password ?? '',
               user.password
             );
             if (isPasswordCorrect) {
-              return user;
+              return {
+                id: user.id,
+                name:  user.username,
+                email: user.email,
+              }
+            }else{
+                return null;
             }
+          }else{
+            return null
           }
         } catch (err: any) {
-          throw new Error(err);
+            return null;          
         }
       },
     })

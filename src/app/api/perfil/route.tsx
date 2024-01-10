@@ -9,7 +9,7 @@ export async function GET(request: any) {
     try {        
         const session = await getServerSession(authOptions);
         // eslint-disable-next-line
-        const email= session?.user?.email;
+        const email = (session as { user: { email: string } })?.user?.email;
         if (session) {
             await connect();
             const actualUser = await User.findOne({ email: email }, { password: 0 }); // Exclude password field
@@ -27,7 +27,7 @@ export async function PUT(request: any) {
     try {
         const session = await getServerSession(authOptions);
         // eslint-disable-next-line
-        const email = session?.user?.email;
+        const email = (session as { user: { email: string } })?.user?.email;
         if (session) {
             
             await connect();
@@ -47,7 +47,7 @@ export async function DELETE(request: any) {
     try {
         const session = await getServerSession(authOptions);
         // eslint-disable-next-line
-        const email = session?.user?.email;
+        const email = (session as { user: { email: string } })?.user?.email;
         if (session) {
             await connect();
             await User.findOneAndDelete({ email: email });
