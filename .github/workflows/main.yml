@@ -180,7 +180,7 @@ jobs:
       - name: Scan the Docker image with Trivy
         uses: aquasecurity/trivy-action@0.16.1
         with:
-          image-ref: ${{ secrets.ACR_LOGIN_SERVER }}/myapp:latest
+          image-ref: ${{ secrets.ACR_REPO }}/myapp:latest
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
