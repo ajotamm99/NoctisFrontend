@@ -157,7 +157,7 @@ jobs:
           
       - name: create env file
         env:
-          MONGODDB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
         run: |
@@ -165,7 +165,7 @@ jobs:
           echo "MONGODB_URI=${MONGODB_URI}" >> .env.local
           echo "NEXTAUTH_URL=${NEXTAUTH_URL}" >> .env.local
           echo "NEXTAUTH_SECRET=${NEXTAUTH_SECRET}" >> .env.local
-          ls
+          ls -la
           cat .env.local
           
       - name: Azure Container Registry Login
