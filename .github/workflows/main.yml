@@ -109,7 +109,7 @@ jobs:
       needs: SAST-analysis
       runs-on: ubuntu-latest
       env:
-        MONGODDB_URI: ${{ secrets.MONGODB_URI }}
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
         NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
         NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       permissions:
